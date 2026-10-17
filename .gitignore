@@ -1,0 +1,32 @@
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Environment Variables & Secrets
+.env
+.env.local
+*.key
+
+# Local Data & Database Persistence
+data/
+chroma_db/
+*.faiss
+*.index
+*.sqlite3
+
+# OS Artifacts
+.DS_Store
+Thumbs.db
