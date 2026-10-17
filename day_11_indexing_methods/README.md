@@ -1,41 +1,60 @@
-# Day 11: Indexing Methods (Flat, IVF, HNSW, and Quantization)
+# Day 11: Indexing Methods (Flat, IVF, HNSW, and Product Quantization)
 
-**Chapter**: Search & Context  
-**Concept**: How vector databases organize data for fast retrieval
+<div align="center">
 
----
+[![AI From Scratch](https://img.shields.io/badge/Platform-AI_From_Scratch-6366f1.svg?style=for-the-badge&logo=google-chrome&logoColor=white)](https://www.aifromscratch.in/)
+[![Course: Hybrid RAG](https://img.shields.io/badge/Course-Hybrid_RAG_Systems-059669.svg?style=for-the-badge)](https://www.aifromscratch.in/course/hybrid-rag)
+[![Free AI Roadmap](https://img.shields.io/badge/Roadmap-Free_AI_Guide-blue.svg?style=for-the-badge)](https://www.aifromscratch.in/learn-ai-roadmap)
+[![Daily Papers](https://img.shields.io/badge/Daily_Papers-Research_Simplified-purple.svg?style=for-the-badge)](https://www.aifromscratch.in/papers)
 
-## 📌 Cheat Sheet & Quick Summary
+</div>
 
-| Concept | Remember this |
-|---|---|
-| **Why ANN?** | Exact search costs $\mathcal{O}(N \cdot d)$ per query. At millions of vectors, you trade a little **recall** for a lot of **speed**. |
-| **The triangle** | **Recall** $\leftrightarrow$ **latency** $\leftrightarrow$ **memory** (plus build time). You tune for an operating point, not a perfect score. |
-| **Flat** | Exact, no training, 100% recall. Perfect up to ~100k-1M vectors. Also your **ground truth**. |
-| **IVF** | k-means into `nlist` clusters; search the `nprobe` nearest clusters. Needs **training**. `nlist` $\approx \sqrt{N} - 4\sqrt{N}$; raise `nprobe` for recall. |
-| **HNSW** | A multi-layer **graph** with greedy navigation. `M` (links: memory/recall), `efConstruction` (build quality), `efSearch` (query recall/latency). The default in most vector DBs. |
-| **Quantization** | **SQ8** (4x smaller), **PQ** (16-64x smaller), **binary** (32x smaller). Recover recall with **re-ranking** (refine) on full vectors. |
-| **Measure** | Recall@k vs **exact** results + ms/query + MB + build time. Target something like **recall@10** $\ge 0.95$. |
-| **Gotchas** | FAISS IVF `nprobe` defaults to $1$; HNSW `efSearch` defaults to $16$. Selective filters hurt HNSW. ANN recall $\ne$ answer relevance. |
+> 🎓 **Official Companion Lesson for [AI From Scratch](https://www.aifromscratch.in/)**  
+> This module is part of the comprehensive **[Hybrid RAG Systems Course](https://www.aifromscratch.in/course/hybrid-rag)**. For interactive quizzes, visual animations, and guided learning pathways, visit **[aifromscratch.in](https://www.aifromscratch.in/)**.
 
 ---
 
+## 📌 Module Overview
+
+- **Chapter**: Search & Context Ingestion  
+- **Core Concept**: How vector databases organize millions of vectors for sub-millisecond retrieval  
+- **Engineering Focus**: Deep architectural analysis of Approximate Nearest Neighbor (ANN) indexing. Compares Flat Brute-Force, Inverted File Index (IVF), Hierarchical Navigable Small World (HNSW), and Product Quantization (PQ). Benchmarks latency vs. recall trade-offs.
+
+### 🔑 Key Search Topics & Concepts
+`HNSW algorithm vector search` `IVF index FAISS` `product quantization PQ` `ANN search benchmarks` `vector database indexing` `AI From Scratch`
+
 ---
+
 ## 📂 Contents & Structure
 
-- [`day_11.ipynb`](./day_11.ipynb): Interactive Jupyter Notebook containing the full theoretical explanation, math derivations, architectural illustrations, and step-by-step runnable code cells.
-- [`main.py`](./main.py): Standalone Python script consolidating the day's algorithms and test cases.
+| File | Type | Description |
+|:-----|:-----|:------------|
+| [`day_11.ipynb`](./day_11.ipynb) | Interactive Notebook | Full theoretical explanation, math derivations, architectural illustrations, and runnable code cells. |
+| [`main.py`](./main.py) | Standalone Python Script | Production-ready, runnable implementation of the algorithms and test cases. |
+
+---
 
 ## 🚀 How to Run
 
-### 1. Interactive Notebook (Recommended)
+### 1. Interactive Jupyter Notebook (Recommended)
 Launch Jupyter from the repository root:
 ```bash
 jupyter notebook day_11_indexing_methods/day_11.ipynb
 ```
 
-### 2. Standalone Script
-Run directly from your terminal:
+### 2. Standalone Python Script
+Execute directly from your terminal:
 ```bash
 python day_11_indexing_methods/main.py
 ```
+
+---
+
+## 🌐 Continue Learning on AI From Scratch
+
+Master production AI and RAG architecture with structured, interactive courses:
+- 🚀 **Full Course**: [Hybrid RAG Systems Interactive Course](https://www.aifromscratch.in/course/hybrid-rag)
+- 📘 **Beginner Path**: [Learn AI for Beginners — 30-Day Guide](https://www.aifromscratch.in/course/30-days-of-ai)
+- 🗺️ **Visual Pathway**: [Free Step-by-Step AI Learning Roadmap](https://www.aifromscratch.in/learn-ai-roadmap)
+- 📑 **Frontier Papers**: [Daily AI Research Papers Explained](https://www.aifromscratch.in/papers)
+- 💻 **Main Repository**: [Hybrid RAG Systems on GitHub](https://github.com/alamshoaib134/hybrid-rag-repo)

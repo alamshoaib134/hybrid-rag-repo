@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this curriculum, code, or benchmarks in your research or educational projects, please cite it as below."
+authors:
+  - family-names: "Alam"
+    given-names: "Shoaib"
+    orcid: ""
+    affiliation: "AI From Scratch"
+title: "Hybrid RAG Systems: Production-Grade Dense and Sparse Retrieval Architecture"
+version: 1.0.0
+date-released: 2026-01-01
+url: "https://www.aifromscratch.in/course/hybrid-rag"
+repository-code: "https://github.com/alamshoaib134/hybrid-rag-repo"
+keywords:
+  - "hybrid rag"
+  - "retrieval-augmented generation"
+  - "vector search"
+  - "bm25"
+  - "cross-encoders"
+  - "reciprocal rank fusion"
+  - "dense retrieval"
+  - "sparse retrieval"
+  - "ai from scratch"

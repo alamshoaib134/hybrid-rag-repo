@@ -1,0 +1,28 @@
+name: Bug Report
+description: Create a report to help us improve the curriculum and code examples
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing to **Hybrid RAG Systems** and the [AI From Scratch](https://www.aifromscratch.in/) community!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us what you expected to happen.
+    validations:
+      required: true
+  - type: input
+    id: day-folder
+    attributes:
+      label: Which Day / Module?
+      placeholder: "e.g., day_13_hybrid_search"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Info
+      description: OS, Python version, package versions.
+      placeholder: "macOS / Linux, Python 3.10, Chromadb 0.5.0"

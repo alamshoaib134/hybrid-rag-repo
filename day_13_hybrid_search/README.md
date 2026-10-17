@@ -1,40 +1,60 @@
-# Day 13: Hybrid Search (Dense + Sparse)
+# Day 13: Hybrid Search (Dense + Sparse with Reciprocal Rank Fusion)
 
-**Chapter**: Search & Context  
-**Concept**: Combining vector search and keyword search with Reciprocal Rank Fusion
+<div align="center">
+
+[![AI From Scratch](https://img.shields.io/badge/Platform-AI_From_Scratch-6366f1.svg?style=for-the-badge&logo=google-chrome&logoColor=white)](https://www.aifromscratch.in/)
+[![Course: Hybrid RAG](https://img.shields.io/badge/Course-Hybrid_RAG_Systems-059669.svg?style=for-the-badge)](https://www.aifromscratch.in/course/hybrid-rag)
+[![Free AI Roadmap](https://img.shields.io/badge/Roadmap-Free_AI_Guide-blue.svg?style=for-the-badge)](https://www.aifromscratch.in/learn-ai-roadmap)
+[![Daily Papers](https://img.shields.io/badge/Daily_Papers-Research_Simplified-purple.svg?style=for-the-badge)](https://www.aifromscratch.in/papers)
+
+</div>
+
+> 🎓 **Official Companion Lesson for [AI From Scratch](https://www.aifromscratch.in/)**  
+> This module is part of the comprehensive **[Hybrid RAG Systems Course](https://www.aifromscratch.in/course/hybrid-rag)**. For interactive quizzes, visual animations, and guided learning pathways, visit **[aifromscratch.in](https://www.aifromscratch.in/)**.
+
+---
+
+## 📌 Module Overview
+
+- **Chapter**: Advanced Retrieval & Fusion  
+- **Core Concept**: Combining vector search and keyword search with Reciprocal Rank Fusion (RRF)  
+- **Engineering Focus**: Builds a production Hybrid Retriever combining dense vector search (Chroma/FAISS) and sparse lexical search (BM25). Implements Reciprocal Rank Fusion (RRF) and linear min-max score blending to achieve state-of-the-art retrieval accuracy.
+
+### 🔑 Key Search Topics & Concepts
+`hybrid search python` `reciprocal rank fusion RRF` `dense sparse fusion RAG` `hybrid retriever LangChain` `BM25 vector search fusion` `AI From Scratch`
 
 ---
 
-## 📌 Cheat Sheet & Quick Summary
-
-| Concept | Remember this | 
-| ----- | ----- | 
-| **Why hybrid?** | Dense catches **meaning**; sparse catches **exact tokens**. They fail on **different** queries, so combine them. | 
-| **Standard pattern** | Retrieve top-N from **each** retriever (for example, 20-100) -> **fuse** -> top-K (-> re-rank, Day 14). | 
-| **The core problem** | Scores live on **different scales** (BM25 is unbounded; cosine is roughly -1..1). Never add raw scores. | 
-| **RRF** | `score = Σ 1 / (k + rank)`, with `k ≈ 60`. **Rank-based**, scale-free, no tuning. **The robust default.** | 
-| **Weighted fusion** | Normalize (min-max / z-score) -> `α·dense + (1-α)·sparse`. Tune `α` on an eval set. | 
-| **α meaning** | `α = 1` -> pure dense; `α = 0` -> pure sparse; `0.5-0.7` is a typical start. | 
-| **Adaptive** | Queries containing **codes/IDs** -> lean sparse; natural-language questions -> lean dense. | 
-| **Security** | Apply the **same filters to both branches**. A missed filter on one branch **leaks** data. | 
-| **DB support** | Elasticsearch/OpenSearch, Weaviate, Qdrant, Milvus, Pinecone, Vespa, Azure AI Search, and SQL (pgvector + full-text) all support hybrid. |
-
----
 ## 📂 Contents & Structure
 
-- [`day_13.ipynb`](./day_13.ipynb): Interactive Jupyter Notebook containing the full theoretical explanation, math derivations, architectural illustrations, and step-by-step runnable code cells.
-- [`main.py`](./main.py): Standalone Python script consolidating the day's algorithms and test cases.
+| File | Type | Description |
+|:-----|:-----|:------------|
+| [`day_13.ipynb`](./day_13.ipynb) | Interactive Notebook | Full theoretical explanation, math derivations, architectural illustrations, and runnable code cells. |
+| [`main.py`](./main.py) | Standalone Python Script | Production-ready, runnable implementation of the algorithms and test cases. |
+
+---
 
 ## 🚀 How to Run
 
-### 1. Interactive Notebook (Recommended)
+### 1. Interactive Jupyter Notebook (Recommended)
 Launch Jupyter from the repository root:
 ```bash
 jupyter notebook day_13_hybrid_search/day_13.ipynb
 ```
 
-### 2. Standalone Script
-Run directly from your terminal:
+### 2. Standalone Python Script
+Execute directly from your terminal:
 ```bash
 python day_13_hybrid_search/main.py
 ```
+
+---
+
+## 🌐 Continue Learning on AI From Scratch
+
+Master production AI and RAG architecture with structured, interactive courses:
+- 🚀 **Full Course**: [Hybrid RAG Systems Interactive Course](https://www.aifromscratch.in/course/hybrid-rag)
+- 📘 **Beginner Path**: [Learn AI for Beginners — 30-Day Guide](https://www.aifromscratch.in/course/30-days-of-ai)
+- 🗺️ **Visual Pathway**: [Free Step-by-Step AI Learning Roadmap](https://www.aifromscratch.in/learn-ai-roadmap)
+- 📑 **Frontier Papers**: [Daily AI Research Papers Explained](https://www.aifromscratch.in/papers)
+- 💻 **Main Repository**: [Hybrid RAG Systems on GitHub](https://github.com/alamshoaib134/hybrid-rag-repo)

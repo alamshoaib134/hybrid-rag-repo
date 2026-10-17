@@ -1,43 +1,60 @@
 # Day 15: Query Transformation (Rewriting, Decomposition, Multi-Query, HyDE, Routing)
 
-**Chapter**: Search & Context  
-**Concept**: Rewriting and routing user queries for superior retrieval
+<div align="center">
+
+[![AI From Scratch](https://img.shields.io/badge/Platform-AI_From_Scratch-6366f1.svg?style=for-the-badge&logo=google-chrome&logoColor=white)](https://www.aifromscratch.in/)
+[![Course: Hybrid RAG](https://img.shields.io/badge/Course-Hybrid_RAG_Systems-059669.svg?style=for-the-badge)](https://www.aifromscratch.in/course/hybrid-rag)
+[![Free AI Roadmap](https://img.shields.io/badge/Roadmap-Free_AI_Guide-blue.svg?style=for-the-badge)](https://www.aifromscratch.in/learn-ai-roadmap)
+[![Daily Papers](https://img.shields.io/badge/Daily_Papers-Research_Simplified-purple.svg?style=for-the-badge)](https://www.aifromscratch.in/papers)
+
+</div>
+
+> 🎓 **Official Companion Lesson for [AI From Scratch](https://www.aifromscratch.in/)**  
+> This module is part of the comprehensive **[Hybrid RAG Systems Course](https://www.aifromscratch.in/course/hybrid-rag)**. For interactive quizzes, visual animations, and guided learning pathways, visit **[aifromscratch.in](https://www.aifromscratch.in/)**.
 
 ---
 
-## 📌 Cheat Sheet & Quick Summary
+## 📌 Module Overview
 
-| Concept | Remember this | 
-| ----- | ----- | 
-| **The problem** | Weeks 1-2 tuned the **index**. The **query** is still whatever the user typed: vague, misspelled, conversational, or multi-part. | 
-| **Where it runs** | Before retrieval: `query -> transform -> retrieve -> fuse -> re-rank -> generate`. | 
-| **Rewriting** | Normalize, expand acronyms and synonyms, resolve pronouns from chat history. Cheapest and highest hit rate. | 
-| **Multi-query (RAG-Fusion)** | Generate 3-5 paraphrases, retrieve for each, fuse with **RRF** (Day 13). Fixes one-shot phrasing luck. | 
-| **Decomposition** | Split compound and multi-hop questions into sub-questions. Measure **coverage**, not just recall of one doc. | 
-| **HyDE** | Embed a *hypothetical answer* instead of the question, so you compare answer-to-answer. Helps on jargon-poor queries, hurts on exact codes. | 
-| **Step-back** | Ask the broader question first to pull in background context, then the specific one. | 
-| **Routing** | Choose index, filter, retriever mix, or **no retrieval at all**. Always define a fallback route. | 
-| **Query drift** | The transform changes the meaning and retrieval gets *worse*. **Always keep the original query in the fan-out.** | 
-| **Budget** | Every transform adds an LLM call and more retrievals. Cap fan-out, run branches concurrently, cache aggressively. | 
-| **Security** | A rewritten query must **never** build filters, tenant IDs, or ACLs. Treat query text as untrusted input. | 
-| **Default start** | Rule-based normalization + conversational rewrite + original query always included. Add multi-query only if evaluation justifies it. |
+- **Chapter**: Advanced Retrieval & Fusion  
+- **Core Concept**: Rewriting and routing complex user queries for superior context retrieval  
+- **Engineering Focus**: Master advanced retrieval techniques: Query Rewriting for conversational ambiguity, Sub-Query Decomposition for multi-hop questions, Multi-Query Expansion, Hypothetical Document Embeddings (HyDE), and dynamic Semantic Routing.
+
+### 🔑 Key Search Topics & Concepts
+`query transformation RAG` `HyDE hypothetical document embeddings` `sub-query decomposition` `multi-query retriever` `semantic routing LLM` `AI From Scratch`
 
 ---
+
 ## 📂 Contents & Structure
 
-- [`day_15.ipynb`](./day_15.ipynb): Interactive Jupyter Notebook containing the full theoretical explanation, math derivations, architectural illustrations, and step-by-step runnable code cells.
-- [`main.py`](./main.py): Standalone Python script consolidating the day's algorithms and test cases.
+| File | Type | Description |
+|:-----|:-----|:------------|
+| [`day_15.ipynb`](./day_15.ipynb) | Interactive Notebook | Full theoretical explanation, math derivations, architectural illustrations, and runnable code cells. |
+| [`main.py`](./main.py) | Standalone Python Script | Production-ready, runnable implementation of the algorithms and test cases. |
+
+---
 
 ## 🚀 How to Run
 
-### 1. Interactive Notebook (Recommended)
+### 1. Interactive Jupyter Notebook (Recommended)
 Launch Jupyter from the repository root:
 ```bash
 jupyter notebook day_15_query_transformation/day_15.ipynb
 ```
 
-### 2. Standalone Script
-Run directly from your terminal:
+### 2. Standalone Python Script
+Execute directly from your terminal:
 ```bash
 python day_15_query_transformation/main.py
 ```
+
+---
+
+## 🌐 Continue Learning on AI From Scratch
+
+Master production AI and RAG architecture with structured, interactive courses:
+- 🚀 **Full Course**: [Hybrid RAG Systems Interactive Course](https://www.aifromscratch.in/course/hybrid-rag)
+- 📘 **Beginner Path**: [Learn AI for Beginners — 30-Day Guide](https://www.aifromscratch.in/course/30-days-of-ai)
+- 🗺️ **Visual Pathway**: [Free Step-by-Step AI Learning Roadmap](https://www.aifromscratch.in/learn-ai-roadmap)
+- 📑 **Frontier Papers**: [Daily AI Research Papers Explained](https://www.aifromscratch.in/papers)
+- 💻 **Main Repository**: [Hybrid RAG Systems on GitHub](https://github.com/alamshoaib134/hybrid-rag-repo)

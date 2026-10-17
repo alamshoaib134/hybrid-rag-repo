@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hybrid RAG Systems — Production Dense & Sparse Retrieval | AI From Scratch</title>
+  
+  <meta name="description" content="Master production-grade Hybrid Retrieval-Augmented Generation (RAG) systems. Learn Dense Vector Search, BM25 Sparse Retrieval, Reciprocal Rank Fusion (RRF), and Cross-Encoder Re-Ranking. Official companion to AI From Scratch.">
+  <meta name="keywords" content="Hybrid RAG, Retrieval Augmented Generation, AI From Scratch, Dense Vector Search, BM25 Python, Reciprocal Rank Fusion, Cross-Encoder Reranking, Vector Databases, ChromaDB, FAISS, LangChain, LlamaIndex, Shoaib Alam">
+  <meta name="author" content="Shoaib Alam">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Canonical pointer back to the primary course page on aifromscratch.in -->
+  <link rel="canonical" href="https://www.aifromscratch.in/course/hybrid-rag">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Hybrid RAG Systems — Official Curriculum by AI From Scratch">
+  <meta property="og:description" content="An end-to-end engineering curriculum for building production-grade Hybrid RAG systems with dense and sparse search.">
+  <meta property="og:url" content="https://www.aifromscratch.in/course/hybrid-rag">
+  <meta property="og:site_name" content="AI From Scratch">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hybrid RAG Systems — AI From Scratch">
+  <meta name="twitter:description" content="Master production Hybrid RAG with dense vector search, BM25, and cross-encoder re-ranking.">
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "EducationalOrganization",
+        "name": "AI From Scratch",
+        "url": "https://www.aifromscratch.in",
+        "description": "A beginner-friendly and engineering-focused educational platform dedicated to breaking down artificial intelligence and retrieval systems into practical, hands-on masterclasses.",
+        "founder": {
+          "@type": "Person",
+          "name": "Shoaib Alam",
+          "jobTitle": "AI Engineer & NLP Researcher",
+          "url": "https://shoaibalam.vercel.app/"
+        }
+      },
+      {
+        "@type": "Course",
+        "name": "Hybrid RAG Systems",
+        "description": "Master retrieval-augmented generation with hybrid search, re-ranking, multi-hop reasoning, and production-grade RAG pipelines.",
+        "url": "https://www.aifromscratch.in/course/hybrid-rag",
+        "provider": {
+          "@type": "EducationalOrganization",
+          "name": "AI From Scratch",
+          "url": "https://www.aifromscratch.in"
+        },
+        "educationalLevel": "Intermediate",
+        "inLanguage": "en"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --border: #1f2937;
+      --border-accent: #374151;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --accent: #10b981;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-family);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 0;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(9, 13, 22, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-badge {
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .cta-button {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    .cta-button:hover {
+      background: var(--primary-hover);
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: 4rem auto 2rem;
+      padding: 0 1.5rem;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 0.35rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #ffffff 0%, #9ca3af 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-large {
+      padding: 0.85rem 1.75rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.15s, background 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--card-bg);
+      color: var(--text);
+      border: 1px solid var(--border-accent);
+    }
+
+    .btn-secondary:hover {
+      background: var(--border);
+      transform: translateY(-1px);
+    }
+
+    .features {
+      max-width: 1100px;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+      color: #fff;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .card a {
+      color: #818cf8;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
+
+    .ecosystem-banner {
+      max-width: 1100px;
+      margin: 2rem auto 5rem;
+      padding: 2.5rem;
+      background: linear-gradient(180deg, rgba(31, 41, 55, 0.4) 0%, rgba(17, 24, 39, 0.8) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .ecosystem-banner h2 {
+      font-size: 1.8rem;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .ecosystem-banner p {
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    .ecosystem-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .pill-link {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-accent);
+      padding: 0.6rem 1.2rem;
+      border-radius: 9999px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .pill-link:hover {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--primary);
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="nav-container" aria-label="Main Navigation">
+      <a href="https://www.aifromscratch.in/" class="brand-title">
+        <span>AI From Scratch</span>
+        <span class="brand-badge">Official Hub</span>
+      </a>
+      <div class="nav-links">
+        <a href="https://www.aifromscratch.in/">Learn AI</a>
+        <a href="https://www.aifromscratch.in/course/hybrid-rag">Hybrid RAG</a>
+        <a href="https://www.aifromscratch.in/learn-ai-roadmap">AI Roadmap</a>
+        <a href="https://www.aifromscratch.in/papers">Daily Papers</a>
+        <a href="https://github.com/alamshoaib134/hybrid-rag-repo" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <a href="https://www.aifromscratch.in/course/hybrid-rag" class="cta-button">Start Course →</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-badge">🎓 Production-Grade Engineering Curriculum</div>
+      <h1>Hybrid RAG Systems: Dense + Sparse Retrieval</h1>
+      <p>
+        The definitive open-source codebase, interactive notebooks, and algorithms for building fiduciary-grade Retrieval-Augmented Generation systems. Powered by <strong><a href="https://www.aifromscratch.in/" style="color: #a5b4fc; text-decoration: none;">AI From Scratch</a></strong>.
+      </p>
+      <div class="hero-actions">
+        <a href="https://www.aifromscratch.in/course/hybrid-rag" class="btn-large btn-primary">Open Interactive Course</a>
+        <a href="https://github.com/alamshoaib134/hybrid-rag-repo" class="btn-large btn-secondary">View GitHub Repository</a>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="card">
+        <h3>1. Dense Vector Search</h3>
+        <p>Harness Sentence-Transformers, OpenAI embeddings, and ANN indexers (FAISS, Chroma, HNSW) to capture conceptual similarity and semantic intent.</p>
+        <a href="https://www.aifromscratch.in/course/hybrid-rag">Explore Dense Embeddings →</a>
+      </div>
+
+      <div class="card">
+        <h3>2. Sparse Lexical Search (BM25)</h3>
+        <p>Inverted indexing with BM25Okapi length normalization and saturation to resolve exact acronyms, serial codes, and technical jargon.</p>
+        <a href="https://www.aifromscratch.in/course/hybrid-rag">Learn BM25 Search →</a>
+      </div>
+
+      <div class="card">
+        <h3>3. Reciprocal Rank Fusion (RRF)</h3>
+        <p>Unified rank-based score fusion eliminating disparate score calibrations across vector cosine and unbounded BM25 distributions.</p>
+        <a href="https://www.aifromscratch.in/course/hybrid-rag">Understand RRF Math →</a>
+      </div>
+
+      <div class="card">
+        <h3>4. Cross-Encoder Re-Ranking</h3>
+        <p>Two-stage retrieval utilizing joint all-to-all cross-attention models to eliminate lost-in-the-middle context drift and maximize top-K precision.</p>
+        <a href="https://www.aifromscratch.in/course/hybrid-rag">Explore Re-Ranking →</a>
+      </div>
+
+      <div class="card">
+        <h3>5. Dynamic Query Transformation</h3>
+        <p>Hypothetical Document Embeddings (HyDE), sub-query decomposition for multi-hop questions, and semantic routing.</p>
+        <a href="https://www.aifromscratch.in/course/hybrid-rag">See Query Transformation →</a>
+      </div>
+
+      <div class="card">
+        <h3>6. Faithfulness & RAG Evaluation</h3>
+        <p>Automated LLM-as-a-Judge evaluators for grounded generation, context recall, and MRR metrics to prevent hallucinations.</p>
+        <a href="https://www.aifromscratch.in/course/hybrid-rag">RAG Evaluation Tools →</a>
+      </div>
+    </section>
+
+    <section class="ecosystem-banner">
+      <h2>Explore the AI From Scratch Ecosystem</h2>
+      <p>
+        From foundational NLP and machine learning tutorials to production LLMOps and daily paper analyses, accelerate your AI engineering career.
+      </p>
+      <div class="ecosystem-links">
+        <a href="https://www.aifromscratch.in/" class="pill-link">🌐 AI From Scratch Home</a>
+        <a href="https://www.aifromscratch.in/course/hybrid-rag" class="pill-link">🚀 Hybrid RAG Systems Masterclass</a>
+        <a href="https://www.aifromscratch.in/course/30-days-of-ai" class="pill-link">📘 30 Days of AI for Beginners</a>
+        <a href="https://www.aifromscratch.in/learn-ai-roadmap" class="pill-link">🗺️ Step-by-Step AI Learning Roadmap</a>
+        <a href="https://www.aifromscratch.in/papers" class="pill-link">📑 Daily AI Research Papers Simplified</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      © 2026 <strong><a href="https://www.aifromscratch.in/">AI From Scratch</a></strong>. Created by <a href="https://shoaibalam.vercel.app/" target="_blank" rel="noopener">Shoaib Alam</a> (AI Engineer at JPMC, NLP Researcher).
+    </p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem; color: #6b7280;">
+      Demystifying Artificial Intelligence — one lesson, one paper, one day at a time.
+    </p>
+  </footer>
+
+</body>
+</html>
